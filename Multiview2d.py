@@ -59,8 +59,8 @@ for edge in edges:
              [cube[2, edge[0]], cube[2, edge[1]]], 'b')
 ax1.set_title("Original 3D")
 ax1.set_xlabel('X')
-ax1.set_ylabel('Y')
-ax1.set_zlabel('Z')
+ax1.set_ylabel('Z')
+ax1.set_zlabel('Y')
 
 # Front view with edges
 ax2 = fig.add_subplot(2, 3, 2)
