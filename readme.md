@@ -1,4 +1,4 @@
 # Computer Graphics Projects 
 
 
-#### This repository consist of source code multiview and oblique projection buillt in python programming language using numpy and matplolib.
+#### This repository consist of source code of multiview and oblique projection built in python programming language using numpy and matplotlib.
