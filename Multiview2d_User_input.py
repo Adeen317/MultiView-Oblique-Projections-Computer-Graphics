@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def multiview_projection(vertices, matrix):
-    viewed_matrix = np.dot(matrix, vertices)
-    return viewed_matrix
+    viewmatrix = np.dot(matrix, vertices)
+    return viewmatrix
 
 def define_vertices(shape):
     if shape == 'cube':
@@ -26,86 +26,88 @@ def define_vertices(shape):
         raise ValueError("Invalid shape")
     return vertices, edges
 
+
+
 # Projection matrices
-top = np.array([[1, 0, 0, 0],
-                [0, 1, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 1]])
+top = np.array([[1, 0, 0, 0],       #[1 0 0 0]
+                [0, 0, 1, 0],       #[0 0 0 0]
+                [0, 0, 0, 0],       #[0 0 1 0]
+                [0, 0, 0, 1]])      #[0 0 0 1]
 
-front = np.array([[1, 0, 0, 0],
-                  [0, 1, 0, 0],
-                  [0, 0, 0, 0],
-                  [0, 0, 0, 1]])
+side = np.array([[0, 0, 1, 0],       #[0 0 0 0]
+                  [0, 1, 0, 0],      #[0 1 0 0]
+                  [0, 0, 0, 0],      #[0 0 1 0]
+                  [0, 0, 0, 1]])     #[0 0 0 1]
 
-side = np.array([[0, 0, 1, 0],
-                 [0, 1, 0, 0],
-                 [0, 0, 0, 0],
-                 [0, 0, 0, 1]])
+front = np.array([[1, 0, 0, 0],      #[1 0 0 0]
+                 [0, 1, 0, 0],       #[0 1 0 0]
+                 [0, 0, 0, 0],       #[0 0 0 0]
+                 [0, 0, 0, 1]])      #[0 0 0 0]
 
 #Rotation by y-axis,Theta=45
-rotation1 = np.array([[0.707, 0, 0.707, 0],
+roty = np.array([[0.707, 0, 0.707, 0],
                       [0, 1, 0, 0],
                       [-0.707, 0, 0.707, 0],
                       [0, 0, 0, 1]])
 
 #Rotation by x-axis,Theta=34
-rotation2 = np.array([[1, 0, 0, 0],
+rotx = np.array([[1, 0, 0, 0],
                       [0, 0.829, -0.559, 0],
                       [0, 0.559, 0.829, 0],
                       [0, 0, 0, 1]])
 
-# L=1, Theta=45 for cavalier
+# L=1, Theta=45 for cavalier xy Plane
 obl_cavalier = np.array([[1, 0, 0.707, 0],
                          [0, 1, 0.707, 0],
                          [0, 0, 0, 0],
                          [0, 0, 0, 1]])
 
-# L=1/2, Theta=45 for cabinet
+# L=1/2, Theta=45 for cabinet xy Plane
 obl_cabinet = np.array([[1, 0, 0.353, 0],
                         [0, 1, 0.353, 0],
                         [0, 0, 0, 0],
                         [0, 0, 0, 1]])
 
 # Function to plot specific views in subplots
-def plot_views(top_view, front_view, side_view, rotation2_view, edges):
-    fig, axes = plt.subplots(2, 2, figsize=(20, 5))
+def plot_views(top_view, front_view, side_view, two_D_view, edges):
+    fig, axes = plt.subplots(2, 2, figsize=(16, 5))
 
 
     # Rotation2 View
-    axes[0,0].set_title('2D Orthographic View')
+    axes[0,0].set_title('2D View')
     axes[0,0].set_xlabel('X')
     axes[0,0].set_ylabel('Y')
     for edge in edges:
-        axes[0,0].plot([rotation2_view[0, edge[0]], rotation2_view[0, edge[1]]],
-                     [rotation2_view[1, edge[0]], rotation2_view[1, edge[1]]], 'b')
+        axes[0,0].plot([two_D_view[0, edge[0]], two_D_view[0, edge[1]]],
+                     [two_D_view[1, edge[0]], two_D_view[1, edge[1]]], 'b')
     axes[0,0].axis('equal')
     
     
     # Top View
     axes[0,1].set_title('Top View')
     axes[0,1].set_xlabel('X')
-    axes[0,1].set_ylabel('Y')
+    axes[0,1].set_ylabel('Z')
     for edge in edges:
         axes[0,1].plot([top_view[0, edge[0]], top_view[0, edge[1]]],
                      [top_view[1, edge[0]], top_view[1, edge[1]]], 'b')
     axes[0,1].axis('equal')
     
-    # Front View
-    axes[1,0].set_title('Front View')
+    # Side View
+    axes[1,0].set_title('Side View')
     axes[1,0].set_xlabel('X')
     axes[1,0].set_ylabel('Y')
     for edge in edges:
-        axes[1,0].plot([front_view[0, edge[0]], front_view[0, edge[1]]],
-                     [front_view[1, edge[0]], front_view[1, edge[1]]], 'b')
+        axes[1,0].plot([side_view[0, edge[0]], side_view[0, edge[1]]],
+                     [side_view[1, edge[0]], side_view[1, edge[1]]], 'b')
     axes[1,0].axis('equal')
     
-    # Side View
-    axes[1,1].set_title('Side View')
+    # Front View
+    axes[1,1].set_title('Front View')
     axes[1,1].set_xlabel('Z')
     axes[1,1].set_ylabel('Y')
     for edge in edges:
-        axes[1,1].plot([side_view[0, edge[0]], side_view[0, edge[1]]],
-                     [side_view[1, edge[0]], side_view[1, edge[1]]], 'b')
+        axes[1,1].plot([front_view[0, edge[0]], front_view[0, edge[1]]],
+                     [front_view[1, edge[0]], front_view[1, edge[1]]], 'b')
     axes[1,1].axis('equal')
     
     
@@ -151,21 +153,21 @@ def plot_view(view_matrix, edges, title, xlabel, ylabel):
     plt.show()
 
 # Ask user for shape
-shape = input("Do you want to perform the operation on a 'cube' or a 'wedge'? ").strip().lower()
+shape = input("Select shape to perform the operation\n1. cube\n2. wedge\nEnter Here: ").strip().lower()
 vertices, edges = define_vertices(shape)
 
 # Get the projections
-front_view = multiview_projection(vertices, front)
-top_view = multiview_projection(vertices, top)
 side_view = multiview_projection(vertices, side)
-new_view = multiview_projection(vertices, rotation1)
-new_view2 = multiview_projection(new_view, rotation2)
+top_view = multiview_projection(vertices, top)
+front_view = multiview_projection(vertices, front)
+new_view = multiview_projection(vertices, roty)
+new_view2 = multiview_projection(new_view, rotx)
 obl_cavalier_view = multiview_projection(vertices, obl_cavalier)
 obl_cabinet_view = multiview_projection(vertices, obl_cabinet)
 
 # Continuously ask user for input until they choose to exit
 while True:
-    print("Which view would you like to see? Options are: 'mulitview', 'oblique' or 'exit' to quit")
+    print("Select Views to be projected:\nOptions are:\n1. mulitview\n2. oblique\n3. exit")
     choice = input("Enter your choice: ").strip().lower()
     if choice == 'multiview':
         plot_views(top_view, front_view, side_view, new_view2, edges)
