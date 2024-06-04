@@ -42,9 +42,6 @@ edges = [(0, 1), (1, 2), (2, 3), (3, 0),  # bottom face
          (0, 4), (1, 5), (2, 6), (3, 7)]  # vertical lines
 
 # Get the projections
-front_view = multiview_projection(cube, front)
-top_view = multiview_projection(cube, top)
-side_view = multiview_projection(cube, side)
 new_view = multiview_projection(cube, rotation1)
 new_view2 = multiview_projection(new_view, rotation2)
 
