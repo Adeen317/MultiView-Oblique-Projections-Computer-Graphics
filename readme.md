@@ -44,3 +44,4 @@ This Python script visualizes different projections of 3D shapes (cube and wedge
 
 4. **Results**:
    ![Capture](https://github.com/Adeen317/MultiView-Oblique-Projections-Computer-Graphics/assets/112985225/8699b594-b008-40fb-adc5-ff32c1a8c65f)
+   ![Capture1](https://github.com/Adeen317/MultiView-Oblique-Projections-Computer-Graphics/assets/112985225/272481e7-435c-41d4-895b-f0eb58cba292)
